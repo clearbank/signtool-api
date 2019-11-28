@@ -33,7 +33,9 @@ You should get a response similar to :
 {"signature":"ga1whxQvQsmkCT1Y+SkLWES4X9rXi9YAMu9PrKB4S2Ls7Z+/3yLhIHYdVLbEtifjog0WDftMERc1Gh5dtJft9gfKCdccagJY1S5Wahw9vF1lmXbgiokrPMhQlLthbAbEg1F/9c1HQyik0kaeACfXxGYSIFwrCj0wSaysG/+touxwnFoHErjo9H63uiPr3xGVxxBr6ADIZCtUjQwgfGZgPfMMwv8WhgQN/BCvo6qrs/TARx90NbGzKpMkojXMJR4AJgmHyWz2K487UfMMWJPoqM5TmrEkpYpboKI4YyBSKy9umRTx3LkUS7cnRxrnu9oGfX19FOk1bgTd+gXELbdvKg=="}
 ```
 
-This is using a fixed private key in the `Data` folder.
+> This is using a fixed private key in the `Data` folder.
+
+## Integration
 
 If you are making your `POST` request from an application such as [Postman](https://www.getpostman.com/), you can
 invoke this endpoint using a pre-request script to obtain a signature for payload bodies, before they are sent.

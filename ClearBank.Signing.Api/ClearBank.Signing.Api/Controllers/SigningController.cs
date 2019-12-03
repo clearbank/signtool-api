@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using ClearBank.Signing.Api.Models;
@@ -14,6 +15,10 @@ namespace ClearBank.Signing.Api.Controllers
     [Route("[controller]")]
     public class SigningController : ControllerBase
     {
+        private readonly DirectoryInfo ApplicationDirectoryInfo = new DirectoryInfo(
+            Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location)
+            );
+
         /// <summary>
         /// Signs body with specified private key
         /// </summary>
@@ -27,7 +32,9 @@ namespace ClearBank.Signing.Api.Controllers
                     return BadRequest($"{nameof(content)} not supplied");
 
                 // Get private key pem
-                var privateKeyPem = System.IO.File.ReadAllText(@"Data\Testing.key");
+                var privateKeyPem = System.IO.File.ReadAllText(
+                    Path.Combine(ApplicationDirectoryInfo.FullName, "Data", "Testing.key")
+                    );
 
                 var data = Encoding.UTF8.GetBytes(content);
 

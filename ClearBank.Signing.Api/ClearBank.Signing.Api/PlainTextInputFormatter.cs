@@ -23,16 +23,18 @@ namespace ClearBank.Signing.Api
             if (context == null) throw new ArgumentNullException(nameof(context));
             if (effectiveEncoding == null) throw new ArgumentNullException(nameof(effectiveEncoding));
 
-            using var reader = new StreamReader(context.HttpContext.Request.Body, effectiveEncoding);
-            try
+            using (var reader = new StreamReader(context.HttpContext.Request.Body, effectiveEncoding))
             {
-                var result = await reader.ReadToEndAsync();
+                try
+                {
+                    var result = await reader.ReadToEndAsync();
 
-                return await InputFormatterResult.SuccessAsync(result);
-            }
-            catch
-            {
-                return await InputFormatterResult.FailureAsync();
+                    return await InputFormatterResult.SuccessAsync(result);
+                }
+                catch
+                {
+                    return await InputFormatterResult.FailureAsync();
+                }
             }
         }
     }

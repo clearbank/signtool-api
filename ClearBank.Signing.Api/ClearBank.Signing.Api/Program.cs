@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ClearBank.Signing.Api
 {
@@ -7,14 +7,20 @@ namespace ClearBank.Signing.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateWebHost(args)
+                .Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+        public static IWebHost CreateWebHost(string[] args) =>
+            new WebHostBuilder()
+                .UseKestrel(options =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    options.AddServerHeader = false;
+                })
+                .UseStartup<Startup>()
+                .ConfigureLogging(logging => logging
+                    .AddFilter("System", LogLevel.Error)
+                    .AddFilter("Microsoft", LogLevel.Error))
+                .Build();
     }
 }
